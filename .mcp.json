@@ -1,0 +1,104 @@
+{
+  "mcpServers": {
+    "kapsel-context": {
+      "command": "node",
+      "args": ["mcp-server.js"],
+      "env": {
+        "REPO_OWNER": "bitsbusko-cmd",
+        "REPO_NAME": "Kapsel",
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      }
+    }
+  },
+  "resources": [
+    {
+      "uri": "github://bitsbusko-cmd/Kapsel",
+      "name": "Kapsel Repository",
+      "description": "Source code and project files for Kapsel",
+      "mimeType": "application/vnd.github.v3+json"
+    }
+  ],
+  "tools": [
+    {
+      "name": "get_repository_info",
+      "description": "Get detailed information about the Kapsel repository",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "name": "get_file_content",
+      "description": "Get content of a specific file from the repository",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "File path in the repository"
+          },
+          "ref": {
+            "type": "string",
+            "description": "Branch, tag, or commit SHA (default: main)"
+          }
+        },
+        "required": ["path"]
+      }
+    },
+    {
+      "name": "search_code",
+      "description": "Search for code patterns in the repository",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Search query"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["semantic", "lexical"],
+            "description": "Search type"
+          }
+        },
+        "required": ["query"]
+      }
+    },
+    {
+      "name": "get_issues",
+      "description": "Get issues from the repository",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": ["open", "closed", "all"],
+            "description": "Issue state filter"
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Maximum number of issues to return"
+          }
+        }
+      }
+    },
+    {
+      "name": "get_pull_requests",
+      "description": "Get pull requests from the repository",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": ["open", "closed", "merged", "all"],
+            "description": "PR state filter"
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Maximum number of PRs to return"
+          }
+        }
+      }
+    }
+  ]
+}
